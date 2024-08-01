@@ -1,0 +1,13 @@
+:root {
+  background-color: #000000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --Basic-White: #ffffff;
+}
+body {
+  margin: 0 auto;
+  display: flex;
+  max-width: 429px;
+  min-height: 100dvh;
+  background: var(--Basic-White, #fff);
+}
