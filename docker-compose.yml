@@ -1,4 +1,20 @@
-FROM ubuntu:latest
-LABEL authors="Admin"
+version: '4.32'
 
-ENTRYPOINT ["top", "-b"]
+services:
+  frontend:
+    build:
+      context: ./frontend  # 프론트엔드 Dockerfile이 위치한 경로
+      dockerfile: dev.Dockerfile
+    ports:
+      - "5173:5173"  # 호스트의 3000 포트를 컨테이너의 3000 포트에 매핑
+    volumes:
+      - ./frontend:/app  # 소스 코드 변경 시 즉시 반영
+
+  backend:
+    build:
+      context: ./backend  # 백엔드 Dockerfile이 위치한 경로
+      dockerfile: dev.Dockerfile
+    ports:
+      - "8080:8080"  # 호스트의 8080 포트를 컨테이너의 8080 포트에 매핑
+    volumes:
+      - ./backend:/app  # 소스 코드 변경 시 즉시 반영
