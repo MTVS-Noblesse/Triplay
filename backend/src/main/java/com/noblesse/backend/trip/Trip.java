@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 public class Trip {
 
     @Id
-    @Column(name="TRIP_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="TRIP_ID")
     private Long tripId;
 
     @Column(name="TRIP_TITLE")
