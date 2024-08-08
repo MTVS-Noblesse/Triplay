@@ -29,4 +29,56 @@ public class Clip {
 
     @Column(name = "TRIP_ID") // 해당 여행 TRIP_CODE
     private Long tripId;
+
+    protected Clip() {}
+
+    public Clip(String clipTitle, String clipUrl, LocalDateTime uploadDatetime, Boolean isOpened, Long userId, Long tripId) {
+        this.clipTitle = clipTitle;
+        this.clipUrl = clipUrl;
+        this.uploadDatetime = uploadDatetime;
+        this.isOpened = isOpened;
+        this.userId = userId;
+        this.tripId = tripId;
+    }
+
+    public Long getClipId() {
+        return clipId;
+    }
+
+    public String getClipTitle() {
+        return clipTitle;
+    }
+
+    public String getClipUrl() {
+        return clipUrl;
+    }
+
+    public LocalDateTime getUploadDatetime() {
+        return uploadDatetime;
+    }
+
+    public Boolean getOpened() {
+        return isOpened;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Long getTripId() {
+        return tripId;
+    }
+
+    @Override
+    public String toString() {
+        return "Clip{" +
+                "clipId=" + clipId +
+                ", clipTitle='" + clipTitle + '\'' +
+                ", clipUrl='" + clipUrl + '\'' +
+                ", uploadDatetime=" + uploadDatetime +
+                ", isOpened=" + isOpened +
+                ", userId=" + userId +
+                ", tripId=" + tripId +
+                '}';
+    }
 }
