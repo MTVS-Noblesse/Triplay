@@ -1,4 +1,4 @@
-package com.noblesse.backend.post;
+package com.noblesse.backend.post.entity;
 
 import jakarta.persistence.*;
 

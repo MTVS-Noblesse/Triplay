@@ -1,9 +1,11 @@
-package com.noblesse.backend.post;
+package com.noblesse.backend.post.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Entity(name = "Post")
 @Table(name = "post")
 public class Post {
@@ -37,21 +39,7 @@ public class Post {
     @Column(name = "CLIP_ID")
     private Long clipId;
 
-    //    protected Post() {
-//    }
-    public Post() {
-    }
-
-    public Post(Long postId, String postTitle, String postContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Boolean isOpened, Long userId, Long tripId, Long clipId) {
-        this.postId = postId;
-        this.postTitle = postTitle;
-        this.postContent = postContent;
-        this.createdDateTime = createdDateTime;
-        this.updatedDateTime = updatedDateTime;
-        this.isOpened = isOpened;
-        this.userId = userId;
-        this.tripId = tripId;
-        this.clipId = clipId;
+    protected Post() {
     }
 
     public Post(String postTitle, String postContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Boolean isOpened, Long userId, Long tripId, Long clipId) {
@@ -63,42 +51,6 @@ public class Post {
         this.userId = userId;
         this.tripId = tripId;
         this.clipId = clipId;
-    }
-
-    public Long getPostId() {
-        return postId;
-    }
-
-    public String getPostTitle() {
-        return postTitle;
-    }
-
-    public String getPostContent() {
-        return postContent;
-    }
-
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
-    }
-
-    public LocalDateTime getUpdatedDateTime() {
-        return updatedDateTime;
-    }
-
-    public Boolean getOpened() {
-        return isOpened;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Long getTripId() {
-        return tripId;
-    }
-
-    public Long getClipId() {
-        return clipId;
     }
 
     @Override
