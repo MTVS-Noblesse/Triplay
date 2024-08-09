@@ -1,16 +1,18 @@
 package com.noblesse.backend.post.service;
 
+import com.noblesse.backend.post.dto.query.PostCoCommentDTO;
 import com.noblesse.backend.post.dto.query.PostCommentDTO;
 import com.noblesse.backend.post.dto.query.PostDTO;
 import com.noblesse.backend.post.entity.Post;
 import com.noblesse.backend.post.entity.PostCoComment;
 import com.noblesse.backend.post.entity.PostComment;
+import com.noblesse.backend.post.exception.PostCoCommentNotFoundException;
 import com.noblesse.backend.post.exception.PostCommentNotFoundException;
 import com.noblesse.backend.post.exception.PostNotFoundException;
+import com.noblesse.backend.post.repository.PostCoCommentRepository;
 import com.noblesse.backend.post.repository.PostCommentRepository;
 import com.noblesse.backend.post.repository.PostRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,12 @@ public class PostQueryService {
 
     private final PostRepository postRepository;
     private final PostCommentRepository postCommentRepository;
+    private final PostCoCommentRepository postCoCommentRepository;
 
-    public PostQueryService(PostRepository postRepository, PostCommentRepository postCommentRepository) {
+    public PostQueryService(PostRepository postRepository, PostCommentRepository postCommentRepository, PostCoCommentRepository postCoCommentRepository) {
         this.postRepository = postRepository;
         this.postCommentRepository = postCommentRepository;
+        this.postCoCommentRepository = postCoCommentRepository;
     }
 
     /**
@@ -74,5 +78,29 @@ public class PostQueryService {
     public Page<PostCommentDTO> getAllPostComments(Pageable pageable) {
         Page<PostComment> postCommentPage = postCommentRepository.findAll(pageable);
         return postCommentPage.map(PostCommentDTO::new);
+    }
+
+    /**
+     * ### PostCoCommentDTO ###
+     */
+    /** 포스트 댓글 고유 ID로 포스팅 대댓글을 검색하는 메서드 */
+    public PostCoCommentDTO getPostCoCommentById(Long id) {
+        PostCoComment coComment = postCoCommentRepository.findById(id)
+                .orElseThrow(() -> new PostCoCommentNotFoundException(id));
+        return new PostCoCommentDTO(coComment);
+    }
+
+    /** 사용자 고유 ID(userId)로 해당 사용자의 모든 포스트 대댓글을 조회하는 메서드 */
+    public List<PostCoCommentDTO> getPostCoCommentsByUserId(Long userId) {
+        List<PostCoComment> postCoComments = postCoCommentRepository.findByUserId(userId);
+        return postCoComments.stream()
+                .map(PostCoCommentDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    /** Pageable을 통해 모든 포스트 대댓글을 조회하는 메서드 */
+    public Page<PostCoCommentDTO> getAllPostCoComments(Pageable pageable) {
+        Page<PostCoComment> postCoCommentPage = postCoCommentRepository.findAll(pageable);
+        return postCoCommentPage.map(PostCoCommentDTO::new);
     }
 }
