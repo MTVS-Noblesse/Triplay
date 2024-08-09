@@ -30,4 +30,4 @@
 ### Common(공통)
 - `Class` : PascalCase
 - `Assets` : snake_case
-- `Other Variables : camelCase
+- `Other Variables` : camelCase
