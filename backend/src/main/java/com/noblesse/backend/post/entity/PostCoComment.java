@@ -16,8 +16,11 @@ public class PostCoComment {
     @Column(name = "POST_CO_COMMENT_CONTENT") // POST CO COMMENT 본문
     private String postCommentContent;
 
-    @Column(name = "WRITTEN_DATETIME") // POST CO COMMENT 단 일시
-    private LocalDateTime writtenDatetime;
+    @Column(name = "CREATED_DATETIME") // POST CO COMMENT 생성 일시
+    private LocalDateTime createdDateTime;
+
+    @Column(name = "UPDATED_DATETIME") // POST CO COMMENT 수정 일시
+    private LocalDateTime updatedDateTime;
 
     @Column(name = "USER_ID") // POST CO COMMENT 작성 유저 ID
     private Long userId;
@@ -28,9 +31,10 @@ public class PostCoComment {
     protected PostCoComment() {
     }
 
-    public PostCoComment(String postCommentContent, LocalDateTime writtenDatetime, Long userId, Long postCommentId) {
+    public PostCoComment(String postCommentContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Long userId, Long postCommentId) {
         this.postCommentContent = postCommentContent;
-        this.writtenDatetime = writtenDatetime;
+        this.createdDateTime = createdDateTime;
+        this.updatedDateTime = updatedDateTime;
         this.userId = userId;
         this.postCommentId = postCommentId;
     }
@@ -43,8 +47,12 @@ public class PostCoComment {
         return postCommentContent;
     }
 
-    public LocalDateTime getWrittenDatetime() {
-        return writtenDatetime;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public LocalDateTime getUpdatedDateTime() {
+        return updatedDateTime;
     }
 
     public Long getUserId() {
@@ -60,7 +68,8 @@ public class PostCoComment {
         return "PostCoComment{" +
                 "postCoCommentId=" + postCoCommentId +
                 ", postCommentContent='" + postCommentContent + '\'' +
-                ", writtenDatetime=" + writtenDatetime +
+                ", createdDateTime=" + createdDateTime +
+                ", updatedDateTime=" + updatedDateTime +
                 ", userId=" + userId +
                 ", postCommentId=" + postCommentId +
                 '}';

@@ -1,11 +1,9 @@
 package com.noblesse.backend.post.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Entity(name = "Post")
 @Table(name = "post")
 public class Post {
@@ -51,6 +49,38 @@ public class Post {
         this.userId = userId;
         this.tripId = tripId;
         this.clipId = clipId;
+    }
+
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public String getPostContent() {
+        return postContent;
+    }
+
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public LocalDateTime getUpdatedDateTime() {
+        return updatedDateTime;
+    }
+
+    public Boolean getIsOpened() {
+        return isOpened;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Long getTripId() {
+        return tripId;
+    }
+
+    public Long getClipId() {
+        return clipId;
     }
 
     @Override
