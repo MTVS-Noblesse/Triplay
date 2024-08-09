@@ -18,35 +18,35 @@ public class User {
     private String userName;
 
     @Column(name="user_nickname")
-    private String user_nickname;
+    private String userNickname;
 
     @Column(name="user_email")
-    private String user_email;
+    private String userEmail;
 
     @Column(name="registed_at")
-    private LocalDateTime registed_at;
+    private LocalDateTime registedAt;
 
     @Column(name="updated_at")
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @Column(name="is_available")
-    private boolean is_available;
+    private boolean isAvailable;
 
     @Column(name="profile_url")
-    private String profile_url;
+    private String profileUrl;
 
     public User() {
     }
 
-    public User(Long userId, String userName, String user_nickname, String user_email, LocalDateTime registed_at, LocalDateTime updated_at, boolean is_available, String profile_url) {
+    public User(Long userId, String userName, String userNickname, String userEmail, LocalDateTime registedAt, LocalDateTime updatedAt, boolean isAvailable, String profileUrl) {
         this.userId = userId;
         this.userName = userName;
-        this.user_nickname = user_nickname;
-        this.user_email = user_email;
-        this.registed_at = registed_at;
-        this.updated_at = updated_at;
-        this.is_available = is_available;
-        this.profile_url = profile_url;
+        this.userNickname = userNickname;
+        this.userEmail = userEmail;
+        this.registedAt = registedAt;
+        this.updatedAt = updatedAt;
+        this.isAvailable = isAvailable;
+        this.profileUrl = profileUrl;
     }
 
     public Long getUserId() {
@@ -57,27 +57,69 @@ public class User {
         return userName;
     }
 
-    public String getUser_nickname() {
-        return user_nickname;
+    public String getUserNickname() {
+        return userNickname;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public LocalDateTime getRegisted_at() {
-        return registed_at;
+    public LocalDateTime getRegistedAt() {
+        return registedAt;
     }
 
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public boolean isIs_available() {
-        return is_available;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public String getProfile_url() {
-        return profile_url;
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setUserNickname(String user_nickname) {
+        this.userNickname = user_nickname;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public void setRegistedAt(LocalDateTime registedAt) {
+        this.registedAt = registedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userNickname='" + userNickname + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", registedAt=" + registedAt +
+                ", updatedAt=" + updatedAt +
+                ", isAvailable=" + isAvailable +
+                ", profileUrl='" + profileUrl + '\'' +
+                '}';
     }
 }
