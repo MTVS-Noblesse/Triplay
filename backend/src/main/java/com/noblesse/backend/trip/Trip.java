@@ -2,18 +2,24 @@ package com.noblesse.backend.trip;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name="TBL_TRIP")
+@Table(name = "tbl_trip")
 public class Trip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="TRIP_ID")
+    @Column(name = "trip_id")
     private Long tripId;
 
-    @Column(name="TRIP_TITLE")
+    @Column(name = "trip_title")
     private String tripTitle;
 
-    @Column(name="TRIP_PARTY")
+    @Column(name = "trip_party")
     private String tripParty;
+
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TripDate> tripDates = new ArrayList<>();
 }
