@@ -64,6 +64,30 @@ public class PostQueryService {
         return postPage.map(PostDTO::new);
     }
 
+    /** 포스트에 존재하는 모든 포스트 댓글과 포스트 대댓글을 조회하는 메서드 */
+    public PostDTO getPostWithCommentsAndCoComments(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(postId));
+
+        PostDTO postDTO = new PostDTO(post);
+        List<PostCommentDTO> comments = getCommentsForPost(postId);
+        postDTO.setComments(comments);
+
+        return postDTO;
+    }
+
+    /** 공개된(isOpened = true) 게시물 중 주어진 날짜 범위 내에서 생성된 게시물을 조회하는 메서드 */
+    public List<PostDTO> searchPosts(LocalDateTime startDate, LocalDateTime endDate, List<Long> userIds, boolean isOpened) {
+        if (!isOpened) {
+            throw new IllegalArgumentException("This method only supports searching for open posts.");
+        }
+
+        List<Post> posts = postRepository.findByCreatedDateTimeBetweenAndUserIdInAndIsOpenedTrue(startDate, endDate, userIds);
+        return posts.stream()
+                .map(PostDTO::new)
+                .collect(Collectors.toList());
+    }
+
     /**
      * ### PostCommentDTO ###
      */
@@ -88,6 +112,21 @@ public class PostQueryService {
         return postCommentPage.map(PostCommentDTO::new);
     }
 
+    /** 포스트에 존재하는 모든 포스트 댓글과 포스트 대댓글을 조회하는 메서드 */
+    private List<PostCommentDTO> getCommentsForPost(Long postId) {
+        List<PostComment> comments = postCommentRepository.findByPostId(postId);
+        List<PostCommentDTO> commentDTOs = new ArrayList<>();
+
+        for (PostComment comment : comments) {
+            PostCommentDTO commentDTO = new PostCommentDTO(comment);
+            List<PostCoCommentDTO> coComments = getCoCommentsForComment(comment.getPostCommentId());
+            commentDTO.setCoComments(coComments);
+            commentDTOs.add(commentDTO);
+        }
+
+        return commentDTOs;
+    }
+
     /**
      * ### PostCoCommentDTO ###
      */
@@ -110,6 +149,14 @@ public class PostQueryService {
     public Page<PostCoCommentDTO> getAllPostCoComments(Pageable pageable) {
         Page<PostCoComment> postCoCommentPage = postCoCommentRepository.findAll(pageable);
         return postCoCommentPage.map(PostCoCommentDTO::new);
+    }
+
+    /** 포스트 댓글을 통해 포스트 대댓글을 조회하는 메서드 */
+    private List<PostCoCommentDTO> getCoCommentsForComment(Long commentId) {
+        List<PostCoComment> coComments = postCoCommentRepository.findByPostCommentId(commentId);
+        return coComments.stream()
+                .map(PostCoCommentDTO::new)
+                .collect(Collectors.toList());
     }
 
     /**

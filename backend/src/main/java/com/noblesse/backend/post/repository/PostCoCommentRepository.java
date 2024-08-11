@@ -8,4 +8,6 @@ import java.util.List;
 public interface PostCoCommentRepository extends JpaRepository<PostCoComment, Long> {
 
     List<PostCoComment> findByUserId(Long userId);
+
+    List<PostCoComment> findByPostCommentId(Long postCommentId);
 }

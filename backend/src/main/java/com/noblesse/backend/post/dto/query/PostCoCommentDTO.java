@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class PostCoCommentDTO {
+    private Long postCoCommentId;
     private String postCommentContent;
     private LocalDateTime createdDateTime;
     private LocalDateTime updatedDateTime;
@@ -18,6 +19,7 @@ public class PostCoCommentDTO {
     private Long postCommentId;
 
     public PostCoCommentDTO(PostCoComment coComment) {
+        this.postCoCommentId = coComment.getPostCoCommentId();
         this.postCommentContent = coComment.getPostCommentContent();
         this.createdDateTime = coComment.getCreatedDateTime();
         this.updatedDateTime = coComment.getUpdatedDateTime();

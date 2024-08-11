@@ -31,7 +31,8 @@ public class PostCoComment {
     protected PostCoComment() {
     }
 
-    public PostCoComment(String postCommentContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Long userId, Long postCommentId) {
+    public PostCoComment(Long postCoCommentId, String postCommentContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Long userId, Long postCommentId) {
+        this.postCoCommentId = postCoCommentId;
         this.postCommentContent = postCommentContent;
         this.createdDateTime = createdDateTime;
         this.updatedDateTime = updatedDateTime;

@@ -31,12 +31,17 @@ public class PostComment {
     protected PostComment() {
     }
 
-    public PostComment(String postCommentContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Long userId, Long postId) {
+    public PostComment(Long postCommentId, String postCommentContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Long userId, Long postId) {
+        this.postCommentId = postCommentId;
         this.postCommentContent = postCommentContent;
         this.createdDateTime = createdDateTime;
         this.updatedDateTime = updatedDateTime;
         this.userId = userId;
         this.postId = postId;
+    }
+
+    public Long getPostCommentId() {
+        return postCommentId;
     }
 
     public String getPostCommentContent() {

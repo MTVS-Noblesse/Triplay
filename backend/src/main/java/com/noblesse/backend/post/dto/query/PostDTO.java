@@ -4,6 +4,7 @@ import com.noblesse.backend.post.entity.Post;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDTO {
+    private Long postId;
     private String postTitle;
     private String postContent;
     private LocalDateTime createdDateTime;
@@ -19,8 +21,10 @@ public class PostDTO {
     private Long userId;
     private Long tripId;
     private Long clipId;
+    private List<PostCommentDTO> comments;
 
     public PostDTO(Post post) {
+        this.postId = post.getPostId();
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
         this.createdDateTime = post.getCreatedDateTime();

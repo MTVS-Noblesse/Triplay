@@ -32,10 +32,6 @@ public class PostReport {
         this.postId = postId;
     }
 
-    public Long getPostReportId() {
-        return postReportId;
-    }
-
     public String getPostReportContent() {
         return postReportContent;
     }

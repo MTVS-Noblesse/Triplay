@@ -40,7 +40,8 @@ public class Post {
     protected Post() {
     }
 
-    public Post(String postTitle, String postContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Boolean isOpened, Long userId, Long tripId, Long clipId) {
+    public Post(Long postId, String postTitle, String postContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Boolean isOpened, Long userId, Long tripId, Long clipId) {
+        this.postId = postId;
         this.postTitle = postTitle;
         this.postContent = postContent;
         this.createdDateTime = createdDateTime;
@@ -49,6 +50,10 @@ public class Post {
         this.userId = userId;
         this.tripId = tripId;
         this.clipId = clipId;
+    }
+
+    public Long getPostId() {
+        return postId;
     }
 
     public String getPostTitle() {
