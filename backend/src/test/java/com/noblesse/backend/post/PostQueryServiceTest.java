@@ -3,13 +3,17 @@ package com.noblesse.backend.post;
 import com.noblesse.backend.post.dto.query.PostCoCommentDTO;
 import com.noblesse.backend.post.dto.query.PostCommentDTO;
 import com.noblesse.backend.post.dto.query.PostDTO;
+import com.noblesse.backend.post.dto.query.PostReportDTO;
 import com.noblesse.backend.post.entity.Post;
 import com.noblesse.backend.post.entity.PostCoComment;
 import com.noblesse.backend.post.entity.PostComment;
+import com.noblesse.backend.post.entity.PostReport;
 import com.noblesse.backend.post.exception.PostCommentNotFoundException;
 import com.noblesse.backend.post.exception.PostNotFoundException;
+import com.noblesse.backend.post.exception.PostReportNotFoundException;
 import com.noblesse.backend.post.repository.PostCoCommentRepository;
 import com.noblesse.backend.post.repository.PostCommentRepository;
+import com.noblesse.backend.post.repository.PostReportRepository;
 import com.noblesse.backend.post.repository.PostRepository;
 import com.noblesse.backend.post.service.PostQueryService;
 import org.junit.jupiter.api.*;
@@ -27,6 +31,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PostQueryServiceTest {
@@ -40,12 +45,15 @@ public class PostQueryServiceTest {
     @Mock
     private PostCoCommentRepository postCoCommentRepository;
 
+    @Mock
+    private PostReportRepository postReportRepository;
+
     @InjectMocks
     private PostQueryService postQueryService;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -320,5 +328,94 @@ public class PostQueryServiceTest {
         assertEquals("Test Content 1", result.get(0).getPostCommentContent());
         assertEquals("Test Content 2", result.get(1).getPostCommentContent());
         verify(postCoCommentRepository, times(1)).findByUserId(userId);
+    }
+
+    /**
+     * ### PostReportDTO Tests ###
+     */
+    @DisplayName(value = "# 포스트 신고가 존재하면 postReportId에 해당하는 포스트 신고를 조회하는 테스트")
+    @Test
+    @Order(13)
+    void getPostReportByIdShouldReturnPostReportDTOWhenPostReportExists() {
+        // Arrange
+        Long postReportId = 1L;
+        PostReport postReport = new PostReport("Test Content", 1L, 1L, 1L);
+        when(postReportRepository.findById(postReportId))
+                .thenReturn(Optional.of(postReport));
+
+        // Act
+        PostReportDTO result = postQueryService.getPostReportById(postReportId);
+//        System.out.println("result = " + result); // result = com.noblesse.backend.post.dto.query.PostReportDTO@3f92c349
+//        System.out.println("result.getPostReportContent() = " + result.getPostReportContent()); // Test Content
+//        System.out.println("result.getUserId() = " + result.getUserId()); // 1
+//        System.out.println("result.getPostId() = " + result.getPostId()); // 1
+
+        // Assert
+        assertNotNull(result);
+        assertEquals("Test Content", result.getPostReportContent());
+        verify(postReportRepository, times(1)).findById(postReportId);
+    }
+
+    @DisplayName(value = "# 포스트 신고가 존재하지 않으면 `PostReportNotFoundException`을 리턴받는 테스트")
+    @Test
+    @Order(14)
+    void getPostReportByIdShouldThrowExceptionWhenPostReportDoesNotExist() {
+        // Arrange
+        Long postReportId = 1L;
+        when(postReportRepository.findById(postReportId))
+                .thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(PostReportNotFoundException.class, () -> postQueryService.getPostReportById(postReportId));
+        verify(postReportRepository, times(1)).findById(postReportId);
+    }
+
+    @DisplayName(value = "# post_report 테이블에 존재하는 모든 포스트 신고를 페이지로 조회하는 테스트")
+    @Test
+    @Order(15)
+    void getAllPostReportsShouldReturnPageOfPostReportDTOs() {
+        // Arrange
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        List<PostReport> postReports = Arrays.asList(
+                new PostReport("Test Content 1", 1L, 1L, 1L),
+                new PostReport("Test Content 2", 2L, 2L, 2L)
+        );
+        Page<PostReport> postReportPage = new PageImpl<>(postReports, pageRequest, postReports.size());
+        when(postReportRepository.findAll(pageRequest))
+                .thenReturn(postReportPage);
+
+        // Act
+        Page<PostReportDTO> result = postQueryService.getAllPostReports(pageRequest);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.getContent().size());
+        assertEquals("Test Content 1", result.getContent().get(0).getPostReportContent());
+        assertEquals("Test Content 2", result.getContent().get(1).getPostReportContent());
+        verify(postReportRepository, times(1)).findAll(pageRequest);
+    }
+
+    @DisplayName(value = "# userId로 해당 사용자의 모든 포스트 신고를 조회하는 테스트")
+    @Test
+    @Order(16)
+    void getPostReportsByUserIdShouldReturnListOfPostReportDTOs() {
+        // Arrange
+        Long userId = 1L;
+        List<PostReport> postReports = Arrays.asList(
+                new PostReport("Test Content 1", 1L, 1L, 1L),
+                new PostReport("Test Content 2", 2L, 2L, 2L)
+        );
+        when(postReportRepository.findByUserId(userId))
+                .thenReturn(postReports);
+
+        // Act
+        List<PostReportDTO> result = postQueryService.getPostReportsByUserId(userId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Test Content 1", result.get(0).getPostReportContent());
+        assertEquals("Test Content 2", result.get(1).getPostReportContent());
+        verify(postReportRepository, times(1)).findByUserId(userId);
     }
 }
