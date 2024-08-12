@@ -10,11 +10,12 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
-    @Value("${CLIENT_SECRET}")
-    private String secretKey;// 환경 변수로 관리하는 것이 좋습니다.
-
+    private final String secretKey;
     private final long EXPIRATION_TIME = 3600000; // 1시간
 
+    public JwtUtil(@Value("${CLIENT_SECRET}") String secretKey) {
+        this.secretKey = secretKey;
+    }
     public String generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
