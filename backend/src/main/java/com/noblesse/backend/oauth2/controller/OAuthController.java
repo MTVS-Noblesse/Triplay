@@ -28,10 +28,11 @@ public class OAuthController {
     }
 
     @GetMapping("/login/oauth2/code/naver")
-    public String naverCallback(@RequestParam("code") String code, @RequestParam("state") String state) {
+    public String naverCallback(@RequestParam String code, @RequestParam String state) {
+        System.out.println("오긴 오노?");
+
         OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient("naver", "user");
         OAuth2AccessToken accessToken = null;
-
         // authorizedClient가 null인 경우 처리
         if (authorizedClient != null) {
             accessToken = authorizedClient.getAccessToken();
@@ -62,7 +63,7 @@ public class OAuthController {
             return "redirect:/login?error=api_error"; // API 호출 실패시 처리
         }
         System.out.println("여기까지 오긴 하노");
-        return "redirect:/login"; // 성공적으로 처리 후 홈으로 리다이렉트
+        return "redirect:login"; // 성공적으로 처리 후 홈으로 리다이렉트
     }
     @GetMapping("/home")
     public String home() {

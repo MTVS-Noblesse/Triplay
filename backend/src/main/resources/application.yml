@@ -24,7 +24,7 @@ spring:
               - email
               - profile
             client-name: Naver
-            redirect-uri: https://localhost:8080/login/oauth2/code/naver
+            redirect-uri: https://localhost:8443/login/oauth2/code/naver
             authorization-grant-type: authorization_code
         provider:
           naver:
@@ -37,7 +37,7 @@ spring:
           secret: ${JWT_SECRET}
           expiration: 3600
 server:
-  port: 8080
+  port: 8443
   ssl:
     key-store: classpath:keystore.p12
     key-store-password: ${KEY_PASSWORD}
