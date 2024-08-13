@@ -5,7 +5,6 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-@Builder
 @Entity(name = "Post")
 @Table(name = "post")
 public class Post {
@@ -42,6 +41,7 @@ public class Post {
     protected Post() {
     }
 
+    @Builder
     public Post(Long postId, String postTitle, String postContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Boolean isOpened, Long userId, Long tripId, Long clipId) {
         this.postId = postId;
         this.postTitle = postTitle;

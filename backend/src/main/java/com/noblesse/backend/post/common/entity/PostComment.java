@@ -1,6 +1,7 @@
 package com.noblesse.backend.post.common.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class PostComment {
     protected PostComment() {
     }
 
+    @Builder
     public PostComment(Long postCommentId, String postCommentContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Long userId, Long postId) {
         this.postCommentId = postCommentId;
         this.postCommentContent = postCommentContent;
@@ -38,6 +40,11 @@ public class PostComment {
         this.updatedDateTime = updatedDateTime;
         this.userId = userId;
         this.postId = postId;
+    }
+
+    public void updatePostComment(String postCommentContent) {
+        this.postCommentContent = postCommentContent;
+        this.updatedDateTime = LocalDateTime.now();
     }
 
     public Long getPostCommentId() {
