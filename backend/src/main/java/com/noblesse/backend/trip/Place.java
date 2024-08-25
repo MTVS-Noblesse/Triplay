@@ -1,7 +1,10 @@
 package com.noblesse.backend.trip;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -37,4 +40,10 @@ public class Place {
     @ManyToOne
     @JoinColumn(name = "trip_date_id", nullable = false)
     private TripDate tripDate;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 }
