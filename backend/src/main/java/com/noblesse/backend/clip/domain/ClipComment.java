@@ -1,6 +1,8 @@
-package com.noblesse.backend.clip;
+package com.noblesse.backend.clip.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,8 +17,13 @@ public class ClipComment {
     @Column(name = "CLIP_COMMENT_CONTENT") // CLIP COMMENT 내용
     private String clipCommentContent;
 
+    @CreationTimestamp
     @Column(name = "WRITTEN_DATETIME") // COMMENT 단 일시
     private LocalDateTime writtenDatetime;
+
+    @UpdateTimestamp
+    @Column(name = "MODIFIED_DATETIME")
+    private LocalDateTime modifiedDatetime;
 
     @Column(name = "USER_ID") // Comment 쓴 유저 ID
     private Long userId;
@@ -26,11 +33,14 @@ public class ClipComment {
 
     protected ClipComment() {}
 
-    public ClipComment(String clipCommentContent, LocalDateTime writtenDatetime, Long userId, Long clipId) {
+    public ClipComment(String clipCommentContent, Long userId, Long clipId) {
         this.clipCommentContent = clipCommentContent;
-        this.writtenDatetime = writtenDatetime;
         this.userId = userId;
         this.clipId = clipId;
+    }
+
+    public LocalDateTime getModifiedDatetime() {
+        return modifiedDatetime;
     }
 
     public Long getClipCommentId() {
@@ -59,6 +69,7 @@ public class ClipComment {
                 "clipCommentId=" + clipCommentId +
                 ", clipCommentContent='" + clipCommentContent + '\'' +
                 ", writtenDatetime=" + writtenDatetime +
+                ", modifiedDatetime=" + modifiedDatetime +
                 ", userId=" + userId +
                 ", clipId=" + clipId +
                 '}';

@@ -33,4 +33,5 @@ spring:
           secret: ${JWT_SECRET}
           expiration: 3600
 
-
+mybatis:
+  mapper-locations: mapper/**/*.xml
