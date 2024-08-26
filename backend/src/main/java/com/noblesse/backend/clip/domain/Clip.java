@@ -1,6 +1,7 @@
-package com.noblesse.backend.clip;
+package com.noblesse.backend.clip.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -18,11 +19,12 @@ public class Clip {
     @Column(name = "CLIP_URL") // 클립 저장 URL
     private String clipUrl;
 
-    @Column(name = "UPLOAD_DATETIME") // 업로드 일시
-    private LocalDateTime uploadDatetime;
-
     @Column(name = "IS_OPENED") // 공개 여부
     private Boolean isOpened;
+
+    @CreationTimestamp
+    @Column(name = "UPLOAD_DATETIME") // 업로드 일시
+    private LocalDateTime uploadDatetime;
 
     @Column(name = "USER_ID") // 클립 USER_ID
     private Long userId;
@@ -32,10 +34,9 @@ public class Clip {
 
     protected Clip() {}
 
-    public Clip(String clipTitle, String clipUrl, LocalDateTime uploadDatetime, Boolean isOpened, Long userId, Long tripId) {
+    public Clip(String clipTitle, String clipUrl, Boolean isOpened, Long userId, Long tripId) {
         this.clipTitle = clipTitle;
         this.clipUrl = clipUrl;
-        this.uploadDatetime = uploadDatetime;
         this.isOpened = isOpened;
         this.userId = userId;
         this.tripId = tripId;

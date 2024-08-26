@@ -2,13 +2,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/test_triplay
-    username: root
-    password: password
+    user: root
+    password: 1234
   jpa:
     show-sql: true
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -19,13 +19,9 @@ spring:
           naver:
             client-id: ${CLIENT_ID}
             client-secret: ${CLIENT_SECRET}
-            scope:
-              - name
-              - email
-              - profile
-            client-name: Naver
-            redirect-uri: https://localhost:8443/login/oauth2/code/naver
+            redirect-uri: "localhost:8080/login/oauth2/code/naver"
             authorization-grant-type: authorization_code
+            scope: profile
         provider:
           naver:
             authorization-uri: https://nid.naver.com/oauth2.0/authorize
@@ -44,3 +40,5 @@ server:
     key-store-type: PKCS12
     key-alias: triplay
 
+mybatis:
+  mapper-locations: mapper/**/*.xml
