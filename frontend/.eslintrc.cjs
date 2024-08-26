@@ -1,6 +1,8 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: { browser: true, es2020: true,
+    VITE_BASE_URL: "https://localhost:8443"
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
