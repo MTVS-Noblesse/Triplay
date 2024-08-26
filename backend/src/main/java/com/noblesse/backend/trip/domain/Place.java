@@ -1,6 +1,10 @@
-package com.noblesse.backend.trip;
+package com.noblesse.backend.trip.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -9,6 +13,10 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "tbl_place")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Place {
 
     @Id
@@ -22,8 +30,8 @@ public class Place {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "openhour")
-    private String openhour;
+    @Column(name = "open_hour")
+    private String openHour;
 
     @Column(name = "departure_time")
     private LocalTime departureTime;
