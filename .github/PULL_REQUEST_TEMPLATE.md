@@ -7,14 +7,14 @@
 <br>
 
 ## 📌Issue
-> "close #이슈번호"로 해당 이슈 완료해주세요.
+> 닫을 issue 번호 : resolved #이슈번호
+
+<br>
+
+## 🩼Branch
+> 반영 branch feat-이슈번호 -> dev
 
 <br>
 
 ## 👪To Reviewers
 > reviewer에게 하고 싶은 말을 적어주세요.
-
-<br>
-
-## 🐾Next Move
-> 다음 개발 목표를 적어주세요
