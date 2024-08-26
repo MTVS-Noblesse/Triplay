@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="follow")
 public class Follow {
+    
+    //해킹함 낄낄
 
     @EmbeddedId
     private FollowCompositeKey followInfo;
