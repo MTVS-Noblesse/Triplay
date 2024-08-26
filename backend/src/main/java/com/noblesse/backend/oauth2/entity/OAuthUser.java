@@ -65,4 +65,12 @@ public class OAuthUser {
     public void setProviderId(String providerId) {
         this.providerId = providerId;
     }
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public Long getUserId() {
+        return id;
+    }
 }

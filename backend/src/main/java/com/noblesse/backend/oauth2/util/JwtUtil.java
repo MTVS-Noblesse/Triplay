@@ -1,42 +1,63 @@
 package com.noblesse.backend.oauth2.util;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class JwtUtil {
-    private final String secretKey;
-    private final long EXPIRATION_TIME = 3600000; // 1시간
 
-    public JwtUtil(@Value("${CLIENT_SECRET}") String secretKey) {
+    @Value("${JWT_SECRET}")
+    private String secretKey;
+
+    @Value("${JWT_EXPIRATION_MS}")
+    private long expirationMs;
+
+    private SecretKey key;
+
+    public JwtUtil(@Value("${JWT_SECRET}") String secretKey) {
         this.secretKey = secretKey;
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
-    public String generateToken(String email) {
+
+    // JWT 생성
+    public String generateToken(Long userId) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", userId.toString());
+
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean validateToken(String token, String email) {
-        final String username = extractUsername(token);
-        return (username.equals(email) && !isTokenExpired(token));
+    // JWT 검증
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public String extractUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-    }
-
-    private boolean isTokenExpired(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getExpiration().before(new Date());
+    // 사용자 ID 추출
+    public Long extractUserId(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return Long.valueOf(claims.get("sub").toString());
     }
 }
