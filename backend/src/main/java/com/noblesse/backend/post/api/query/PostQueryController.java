@@ -11,32 +11,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/posts")
+@RequestMapping(value = "/post")
 @RequiredArgsConstructor
 @Tag(name = "Post Query Controller")
 public class PostQueryController {
 
     private final PostQueryService postQueryService;
 
-    @Operation(summary = "게시물 ID로 게시물 조회")
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<PostDTO> getPostById(@PathVariable("id") Long id) {
-        PostDTO post = postQueryService.getPostById(id);
-        return ResponseEntity.ok(post);
-    }
-
-    @Operation(summary = "게시물 목록 조회")
+    @Operation(summary = "포스트 목록 조회")
     @GetMapping
-    public ResponseEntity<List<PostDTO>> getPosts() {
+    public ResponseEntity<List<PostDTO>> getAllPosts() {
         List<PostDTO> posts = postQueryService.getAllPosts();
-
         return ResponseEntity.ok(posts);
     }
 
-    @Operation(summary = "특정 사용자의 게시물 조회")
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<PostDTO>> getPostsByUserId(@PathVariable Long userId) {
-        List<PostDTO> posts = postQueryService.getPostsByUserId(userId);
-        return ResponseEntity.ok(posts);
+    @Operation(summary = "포스트 상세 조회")
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDTO> getPostById(@PathVariable("postId") Long postId) {
+        PostDTO post = postQueryService.getPostById(postId);
+        return ResponseEntity.ok(post);
     }
 }
