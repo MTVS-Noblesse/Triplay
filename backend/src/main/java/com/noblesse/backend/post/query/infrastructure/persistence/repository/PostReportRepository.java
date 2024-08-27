@@ -10,4 +10,6 @@ public interface PostReportRepository extends JpaRepository<PostReport, Long> {
     List<PostReport> findByUserId(Long userId);
 
     List<PostReport> findByPostId(Long postId);
+
+    List<PostReport> findByIsReportedFalse();
 }

@@ -23,10 +23,10 @@ public class PostReport {
     private Boolean isReported;
 
     @Column(name = "created_datetime") // 신고 접수 일시
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdDatetime;
 
     @Column(name = "processed_datetime") // 처리 일시
-    private LocalDateTime processedDateTime;
+    private LocalDateTime processedDatetime;
 
     @Column(name = "report_category_id")
     private Long reportCategoryId;
@@ -34,23 +34,26 @@ public class PostReport {
     @Column(name = "user_id")
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @Column(name = "post_id")
+    private Long postId;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "post_id")
+//    private Post post;
 
     protected PostReport() {
     }
 
     @Builder
-    public PostReport(Long postReportId, String postReportContent, LocalDateTime createdDateTime, LocalDateTime processedDateTime, Boolean isReported, Long reportCategoryId, Long userId, Post post) {
+    public PostReport(Long postReportId, String postReportContent, Boolean isReported, LocalDateTime createdDatetime, LocalDateTime processedDatetime, Long reportCategoryId, Long userId, Long postId) {
         this.postReportId = postReportId;
         this.postReportContent = postReportContent;
-        this.createdDateTime = createdDateTime;
-        this.processedDateTime = processedDateTime;
         this.isReported = isReported;
+        this.createdDatetime = createdDatetime;
+        this.processedDatetime = processedDatetime;
         this.reportCategoryId = reportCategoryId;
         this.userId = userId;
-        this.post = post;
+        this.postId = postId;
     }
 
     public void updatePostReport(String postReportContent) {
@@ -65,20 +68,20 @@ public class PostReport {
         return postReportContent;
     }
 
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
-    }
-
-    public void setCreatedDateTime(LocalDateTime createdDateTime) {
-        this.createdDateTime = createdDateTime;
-    }
-
-    public LocalDateTime getProcessedDateTime() {
-        return processedDateTime;
-    }
-
-    public Boolean isReported() {
+    public Boolean getIsReported() {
         return isReported;
+    }
+
+    public LocalDateTime getCreatedDatetime() {
+        return createdDatetime;
+    }
+
+    public void setCreatedDatetime(LocalDateTime createdDatetime) {
+        this.createdDatetime = createdDatetime;
+    }
+
+    public LocalDateTime getProcessedDatetime() {
+        return processedDatetime;
     }
 
     public Long getReportCategoryId() {
@@ -89,11 +92,15 @@ public class PostReport {
         return userId;
     }
 
-    public Post getPost() {
-        return post;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
+    //    public Post getPost() {
+//        return post;
+//    }
+//
+//    public void setPost(Post post) {
+//        this.post = post;
+//    }
 }

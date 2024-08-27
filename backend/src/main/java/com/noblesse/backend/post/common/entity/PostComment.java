@@ -5,9 +5,6 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Entity(name = "PostComment")
 @Table(name = "post_comment")
@@ -22,38 +19,41 @@ public class PostComment {
     @Column(name = "post_comment_content") // POST COMMENT 본문
     private String postCommentContent;
 
-    @Column(name = "created_datetime") // POST COMMENT 생성 일시
-    private LocalDateTime createdDateTime;
+    @Column(name = "written_datetime") // POST COMMENT 생성 일시
+    private LocalDateTime writtenDatetime;
 
-    @Column(name = "updated_datetime") // POST COMMENT 수정 일시
-    private LocalDateTime updatedDateTime;
+    @Column(name = "modified_datetime") // POST COMMENT 수정 일시
+    private LocalDateTime modifiedDatetime;
 
     @Column(name = "user_id") // POST COMMENT 작성 유저 ID
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post; // POST COMMENT 달린 포스트 ID
+    @Column(name = "post_id")
+    private Long postId;
 
-    @OneToMany(mappedBy = "postComment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostCoComment> coComments = new ArrayList<>();
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "post_id")
+//    private Post post; // POST COMMENT 달린 포스트 ID
+
+//    @OneToMany(mappedBy = "postComment", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<PostCoComment> coComments = new ArrayList<>();
 
     protected PostComment() {
     }
 
     @Builder
-    public PostComment(Long postCommentId, String postCommentContent, LocalDateTime createdDateTime, LocalDateTime updatedDateTime, Long userId, Post post) {
+    public PostComment(Long postCommentId, String postCommentContent, LocalDateTime writtenDatetime, LocalDateTime modifiedDatetime, Long userId, Long postId) {
         this.postCommentId = postCommentId;
         this.postCommentContent = postCommentContent;
-        this.createdDateTime = createdDateTime;
-        this.updatedDateTime = updatedDateTime;
+        this.writtenDatetime = writtenDatetime;
+        this.modifiedDatetime = modifiedDatetime;
         this.userId = userId;
-        this.post = post;
+        this.postId = postId;
     }
 
     public void updatePostComment(String postCommentContent) {
         this.postCommentContent = postCommentContent;
-        this.updatedDateTime = LocalDateTime.now();
+        this.modifiedDatetime = LocalDateTime.now();
     }
 
     public Long getPostCommentId() {
@@ -64,23 +64,19 @@ public class PostComment {
         return postCommentContent;
     }
 
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
+    public LocalDateTime getWrittenDatetime() {
+        return writtenDatetime;
     }
 
-    public LocalDateTime getUpdatedDateTime() {
-        return updatedDateTime;
+    public LocalDateTime getModifiedDatetime() {
+        return modifiedDatetime;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
+    public Long getPostId() {
+        return postId;
     }
 }
