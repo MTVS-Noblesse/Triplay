@@ -30,9 +30,10 @@ public class PostReportDTO {
     }
 
     // Update 용 생성자
-    public PostReportDTO(Long postReportId, Boolean isReported, Long userId) {
+    public PostReportDTO(Long postReportId, String postReportContent, Boolean isReported, Long userId) {
         this.postReportId = postReportId;
         this.isReported = isReported;
+        this.postReportContent = postReportContent;
         this.userId = userId;
     }
 

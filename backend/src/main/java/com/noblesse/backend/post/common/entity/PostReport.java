@@ -45,12 +45,12 @@ public class PostReport {
     }
 
     @Builder
-    public PostReport(Long postReportId, String postReportContent, LocalDateTime createdDatetime, LocalDateTime processedDatetime, Boolean isReported, Long reportCategoryId, Long userId, Long postId) {
+    public PostReport(Long postReportId, String postReportContent, Boolean isReported, LocalDateTime createdDatetime, LocalDateTime processedDatetime, Long reportCategoryId, Long userId, Long postId) {
         this.postReportId = postReportId;
         this.postReportContent = postReportContent;
+        this.isReported = isReported;
         this.createdDatetime = createdDatetime;
         this.processedDatetime = processedDatetime;
-        this.isReported = isReported;
         this.reportCategoryId = reportCategoryId;
         this.userId = userId;
         this.postId = postId;
@@ -68,6 +68,10 @@ public class PostReport {
         return postReportContent;
     }
 
+    public Boolean getIsReported() {
+        return isReported;
+    }
+
     public LocalDateTime getCreatedDatetime() {
         return createdDatetime;
     }
@@ -78,10 +82,6 @@ public class PostReport {
 
     public LocalDateTime getProcessedDatetime() {
         return processedDatetime;
-    }
-
-    public Boolean getIsReported() {
-        return isReported;
     }
 
     public Long getReportCategoryId() {

@@ -352,7 +352,7 @@ public class PostQueryServiceTest {
     void getPostReportByIdShouldReturnPostReportDTOWhenPostReportExists() {
         // Arrange
         Long postReportId = 1L;
-        PostReport postReport = new PostReport(postReportId, "Test Content", LocalDateTime.now(), LocalDateTime.now(), true, 1L, 1L, 1L);
+        PostReport postReport = new PostReport(postReportId, "Test Content", true, LocalDateTime.now(), LocalDateTime.now(), 1L, 1L, 1L);
 
         when(postReportRepository.findById(postReportId))
                 .thenReturn(Optional.of(postReport));
@@ -391,8 +391,8 @@ public class PostQueryServiceTest {
     void getAllPostReportsShouldReturnListOfPostReportDTOs() {
         // Arrange
         List<PostReport> postReports = Arrays.asList(
-                new PostReport(1L, "어그로 포스트 1", LocalDateTime.now(), LocalDateTime.now(), true, 1L, 1L, 1L),
-                new PostReport(2L, "어그로 포스트 2", LocalDateTime.now(), LocalDateTime.now(), true, 2L, 2L, 2L)
+                new PostReport(1L, "어그로 포스트 1", true, LocalDateTime.now(), LocalDateTime.now(), 1L, 1L, 1L),
+                new PostReport(2L, "어그로 포스트 2", true, LocalDateTime.now(), LocalDateTime.now(), 2L, 2L, 2L)
         );
 
         when(postReportRepository.findAll())
@@ -416,8 +416,8 @@ public class PostQueryServiceTest {
         // Arrange
         Long postId = 1L;
         List<PostReport> postReports = Arrays.asList(
-                new PostReport(1L, "Test Content 1", LocalDateTime.now(), LocalDateTime.now(), true, 1L, 1L, postId),
-                new PostReport(2L, "Test Content 2", LocalDateTime.now(), LocalDateTime.now(), true, 2L, 2L, postId)
+                new PostReport(1L, "Test Content 1", true, LocalDateTime.now(), LocalDateTime.now(), 1L, 1L, postId),
+                new PostReport(2L, "Test Content 2", true, LocalDateTime.now(), LocalDateTime.now(), 2L, 2L, postId)
         );
 
         when(postReportRepository.findByPostId(postId))
@@ -443,8 +443,8 @@ public class PostQueryServiceTest {
         // Arrange
         Long postId = 1L;
         List<PostReport> postReports = Arrays.asList(
-                new PostReport(1L, "어그로 포스트 1", LocalDateTime.now(), LocalDateTime.now(), true, 1L, 1L, postId),
-                new PostReport(2L, "어그로 포스트 2", LocalDateTime.now(), LocalDateTime.now(), true, 2L, 2L, postId)
+                new PostReport(1L, "어그로 포스트 1", true, LocalDateTime.now(), LocalDateTime.now(), 1L, 1L, postId),
+                new PostReport(2L, "어그로 포스트 2", true, LocalDateTime.now(), LocalDateTime.now(), 2L, 2L, postId)
         );
 
         when(postReportRepository.findByPostId(postId))
@@ -658,7 +658,7 @@ public class PostQueryServiceTest {
     @Order(30)
     void testPostReportWithMaxLengthContent() {
         String maxLengthContent = "a".repeat(1000); // 가정: 신고 내용 최대 길이가 1000
-        PostReport postReport = new PostReport(1L, maxLengthContent, LocalDateTime.now(), LocalDateTime.now(), true, 1L, 1L, 1L);
+        PostReport postReport = new PostReport(1L, maxLengthContent, true, LocalDateTime.now(), LocalDateTime.now(), 1L, 1L, 1L);
 
         when(postReportRepository.findById(1L)).thenReturn(Optional.of(postReport));
 
@@ -684,8 +684,8 @@ public class PostQueryServiceTest {
     @Order(32)
     void testUnprocessedPostReports() {
         List<PostReport> unprocessedReports = Arrays.asList(
-                new PostReport(1L, "Unprocessed Report 1", LocalDateTime.now(), null, false, 1L, 1L, 1L),
-                new PostReport(2L, "Unprocessed Report 2", LocalDateTime.now(), null, false, 2L, 2L, 2L)
+                new PostReport(1L, "Unprocessed Report 1", false, LocalDateTime.now(), null, 1L, 1L, 1L),
+                new PostReport(2L, "Unprocessed Report 2", false, LocalDateTime.now(), null, 2L, 2L, 2L)
         );
 
         when(postReportRepository.findByIsReportedFalse()).thenReturn(unprocessedReports);
