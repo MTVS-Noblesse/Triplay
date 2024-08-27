@@ -10,9 +10,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByUserId(Long userId);
 
-    List<Post> findByCreatedDateTimeBetweenAndUserIdInAndIsOpenedTrue(
+    List<Post> findByWrittenDatetimeBetweenAndUserIdInAndIsOpened(
             LocalDateTime startDate,
             LocalDateTime endDate,
-            List<Long> userIds
+            List<Long> userIds,
+            boolean isOpened
     );
 }

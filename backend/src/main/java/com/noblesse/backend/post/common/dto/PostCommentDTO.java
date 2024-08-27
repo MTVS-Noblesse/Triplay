@@ -4,7 +4,6 @@ import com.noblesse.backend.post.common.entity.PostComment;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -14,11 +13,11 @@ import java.util.List;
 public class PostCommentDTO {
     private Long postCommentId;
     private String postCommentContent;
-    private LocalDateTime createdDateTime;
-    private LocalDateTime updatedDateTime;
+    private LocalDateTime writtenDatetime;
+    private LocalDateTime modifiedDatetime;
     private Long userId;
     private Long postId;
-    private List<PostCoCommentDTO> coComments;
+//    private List<PostCoCommentDTO> coComments;
 
     // Create 용 생성자
     public PostCommentDTO(String postCommentContent, Long userId, Long postId) {
@@ -44,9 +43,9 @@ public class PostCommentDTO {
     public PostCommentDTO(PostComment postComment) {
         this.postCommentId = postComment.getPostCommentId();
         this.postCommentContent = postComment.getPostCommentContent();
-        this.createdDateTime = postComment.getCreatedDateTime();
-        this.updatedDateTime = postComment.getUpdatedDateTime();
+        this.writtenDatetime = postComment.getWrittenDatetime();
+        this.modifiedDatetime = postComment.getModifiedDatetime();
         this.userId = postComment.getUserId();
-        this.postId = postComment.getPost() != null ? postComment.getPost().getPostId() : null;
+        this.postId = postComment.getPostId();
     }
 }
